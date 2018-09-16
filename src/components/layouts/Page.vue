@@ -2,7 +2,7 @@
   <div class="main">
     <App-Header class="header"></App-Header>
     <div class="content">
-      <slot></slot>
+      <router-view></router-view>
     </div>
     <App-Footer class="footer"></App-Footer>
   </div>
@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main {
   height: 100%;
   width: 100%;

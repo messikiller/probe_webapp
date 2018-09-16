@@ -1,36 +1,35 @@
 <template>
-  <Page>
+  <div>
     <div class="title">
       <h3>探头无纸化系统（移动版）</h3>
     </div>
     <mu-container>
       <mu-row align-items="stretch" align-content="stretch" fill>
         <mu-col v-for="(item, index) in list" span="3" class="grid" :key="index">
-          <div class="wrapper">
-            <mu-ripple class="ripple">
-              <mu-paper class="cell" :z-depth="1">
-                <mu-icon :value="item.icon"></mu-icon>
-                <div class="grid-title">{{ item.title }}</div>
-              </mu-paper>
-            </mu-ripple>
-          </div>
+            <div class="wrapper">
+              <router-link :to="{ name: item.route == undefined ? 'MainIndex' : item.route }">
+              <mu-ripple class="ripple" color="grey">
+                  <mu-paper class="cell" :z-depth="1">
+                    <mu-icon :value="item.icon" style="color: rgba(0, 0, 0, 0.87);"></mu-icon>
+                    <div class="grid-title">{{ item.title }}</div>
+                  </mu-paper>
+              </mu-ripple>
+            </router-link>
+            </div>
         </mu-col>
       </mu-row>
     </mu-container>
-  </Page>
+  </div>
 </template>
 
 <script>
-import Page from '../layouts/Page'
-
 export default {
   name: 'Index',
-  components: { Page },
   data () {
     return {
       list: [
-        { icon: 'home', title: '电缆操作' },
-        { icon: 'list', title: '电缆操作' },
+        { icon: 'home', title: '电缆操作', route: 'CableOperate' },
+        { icon: 'list', title: '芯部操作' },
         { icon: 'backup', title: '总装操作' },
         { icon: 'build', title: '使用说明' },
         { icon: 'explore', title: '表单列表' },
@@ -70,6 +69,7 @@ export default {
 }
 
 .grid-title {
+  color: rgba(0, 0, 0, 0.87);
   display: block;
   margin-top: 5px;
   overflow: hidden;

@@ -53,7 +53,7 @@ export default {
         type: 'warning'
       }).then(({ result }) => {
         if (result) {
-          this.$toast.message('点击了确定')
+          this.$router.push({name: 'AuthLogin'})
         }
       })
     }
@@ -62,10 +62,4 @@ export default {
 </script>
 
 <style scoped>
-.rotate {
-  transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-}
 </style>

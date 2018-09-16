@@ -1,55 +1,49 @@
 <template>
-  <Page>
-    <mu-container>
-      <mu-card>
-        <mu-card-text>
+  <mu-container>
+    <mu-card>
+      <mu-card-text>
 
-          <mu-select label="选择账号：" v-model="username" filterable full-width>
-            <mu-option label="city" value="123"></mu-option>
-          </mu-select>
+        <mu-select label="选择账号：" v-model="username" filterable full-width>
+          <mu-option label="city" value="123"></mu-option>
+        </mu-select>
 
-          <mu-text-field
-            label="密码："
-            v-model="password"
-            :type="showPassword ? 'text' : 'password'"
-            :action-icon="showPassword ? 'visibility_off' : 'visibility'"
-            :action-click="() => (showPassword = !showPassword)"
-            full-width
+        <mu-text-field
+          label="密码："
+          v-model="password"
+          :type="showPassword ? 'text' : 'password'"
+          :action-icon="showPassword ? 'visibility_off' : 'visibility'"
+          :action-click="() => (showPassword = !showPassword)"
+          full-width
+        >
+        </mu-text-field>
+
+        <mu-button color="primary" full-width>提交</mu-button>
+
+        <mu-container class="chips" v-if="users.length > 0">
+          <mu-chip
+            class="user-chip"
+            color="teal"
+            v-for="(user, idx) in users"
+            :key="idx"
+            delete
+            @click="handleClickChip(user)"
+            @delete="handleDeleteChip(user)"
           >
-          </mu-text-field>
+            <mu-avatar :size="32" color="teal">
+              <mu-icon value="account_circle"></mu-icon>
+            </mu-avatar>
+            {{ user.username }}（{{ user.nickname }}）
+          </mu-chip>
+        </mu-container>
 
-          <mu-button color="primary" full-width>提交</mu-button>
-
-          <mu-container class="chips" v-if="users.length > 0">
-            <mu-chip
-              class="user-chip"
-              color="teal"
-              v-for="(user, idx) in users"
-              :key="idx"
-              delete
-              @click="handleClickChip(user)"
-              @delete="handleDeleteChip(user)"
-            >
-              <mu-avatar :size="32" color="teal">
-                <mu-icon value="account_circle"></mu-icon>
-              </mu-avatar>
-              {{ user.username }}（{{ user.nickname }}）
-            </mu-chip>
-          </mu-container>
-
-        </mu-card-text>
-      </mu-card>
-    </mu-container>
-
-  </Page>
+      </mu-card-text>
+    </mu-card>
+  </mu-container>
 </template>
 
 <script>
-import Page from '../layouts/Page'
-
 export default {
   name: 'Tansform',
-  components: { Page },
   data () {
     return {
       users: [

@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import Sider from './Sider'
 
 export default {
