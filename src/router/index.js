@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Content from '@/components/layouts/Content'
-import About from '@/components/About'
-import Transform from '@/components/user/Transform'
+import Index from '@/components/main/Index'
+import About from '@/components/main/About'
+import Transform from '@/components/auth/Transform'
+import Login from '@/components/auth/Login'
 
 Vue.use(Router)
 
@@ -11,23 +11,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
-      path: '/index',
-      name: 'Content',
-      component: Content
+      name: 'MainIndex',
+      component: Index
     },
     {
       path: '/about',
-      name: 'About',
+      name: 'MainAbout',
       component: About
     },
     {
-      path: '/about',
-      name: 'UserTransform',
+      path: '/auth/transform',
+      name: 'AuthTransform',
       component: Transform
+    },
+    {
+      path: '/login',
+      name: 'AuthLogin',
+      component: Login
     }
   ]
 })
