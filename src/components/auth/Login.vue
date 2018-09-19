@@ -26,7 +26,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Login',
   components: {
@@ -40,7 +39,19 @@ export default {
   },
   methods: {
     clickSubmitBtn: function () {
-      this.$router.push({name: 'MainIndex'})
+      let that = this
+      this.$http.post(this.API.auth_login, {
+        username: this.username,
+        password: this.password
+      }).then(res => {
+        if (Number(res.data.code) === that.ENV.HTTP_OK) {
+          that.$store.dispatch('login', {
+            token: res.data.data.access_token,
+            userinfo: res.data.data.user
+          })
+          that.$router.push({name: 'MainIndex'})
+        }
+      })
     }
   }
 }

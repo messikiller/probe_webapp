@@ -1,10 +1,15 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Vuex from 'vuex'
+import request from './requests'
 import App from './App'
 
+import store from './store'
 import router from './router'
+
 import MuseUI from 'muse-ui'
+
 import 'muse-ui/dist/muse-ui.css'
 import 'material-icons/iconfont/material-icons.css'
 
@@ -19,8 +24,16 @@ import 'muse-ui-progress/dist/muse-ui-progress.css'
 
 import './assets/main.css'
 
+import env from '@/../env.js'
+import api from '@/requests/api.js'
+
+Vue.prototype.$http = request
+Vue.prototype.ENV = env
+Vue.prototype.API = api
+
 Vue.config.productionTip = false
 
+Vue.use(Vuex)
 Vue.use(MuseUI)
 Vue.use(Toast)
 Vue.use(Message)
@@ -31,6 +44,7 @@ Vue.use(NProgress)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

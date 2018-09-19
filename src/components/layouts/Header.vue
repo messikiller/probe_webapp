@@ -4,7 +4,7 @@
       <mu-button icon slot="left" @click="clickBack">
         <mu-icon value="keyboard_arrow_left"></mu-icon>
       </mu-button>
-      <mu-flex justify-content="center" align-items="center"><mu-icon value="account_circle"></mu-icon>&ensp;Administrator</mu-flex>
+      <mu-flex justify-content="center" align-items="center"><mu-icon value="account_circle"></mu-icon>&ensp;{{ nickname }}</mu-flex>
       <mu-button icon slot="right" @click="showDrawer">
         <mu-icon value="menu"></mu-icon>
       </mu-button>
@@ -20,6 +20,12 @@ export default {
   name: 'Header',
   components: {
     AppSider: Sider
+  },
+  computed: {
+    nickname: function () {
+      var user = this.$store.getters.userinfo
+      return user === '' ? '未登录' : user.nickname
+    }
   },
   data () {
     return {

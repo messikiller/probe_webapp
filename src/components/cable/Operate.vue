@@ -6,7 +6,11 @@
     </mu-breadcrumbs>
     <mu-card>
       <mu-card-text>
+
         <mu-text-field label="电缆号：" v-model="cable_number" full-width ref="dataCableNumber"></mu-text-field>
+
+        <mu-button color="primary" full-width @click="handleSubmit">提交</mu-button>
+
       </mu-card-text>
     </mu-card>
   </mu-container>
@@ -26,6 +30,13 @@ export default {
     }
   },
   methods: {
+    handleSubmit: function () {
+      this.$http.post('/form/cable/operate', {
+        cable_number: this.cable_number
+      }).then(res => {
+        // console.log(res)
+      })
+    }
   }
 }
 </script>
