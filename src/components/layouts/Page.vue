@@ -4,6 +4,7 @@
     <div class="content">
       <router-view></router-view>
     </div>
+    <App-Loading></App-Loading>
     <App-Footer class="footer"></App-Footer>
   </div>
 </template>
@@ -11,12 +12,14 @@
 <script>
 import Header from './Header'
 import Footer from './Footer'
+import Loading from './Loading'
 
 export default {
   name: 'Page',
   components: {
     AppHeader: Header,
-    AppFooter: Footer
+    AppFooter: Footer,
+    AppLoading: Loading
   }
 }
 </script>

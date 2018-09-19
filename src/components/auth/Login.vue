@@ -18,17 +18,21 @@
           </mu-text-field>
 
           <mu-button color="primary" full-width @click="clickSubmitBtn">登录</mu-button>
-
+          <App-Loading></App-Loading>
         </mu-card-text>
       </mu-card>
     </mu-container>
   </div>
+
 </template>
 
 <script>
+import Loading from '@/components/layouts/Loading'
+
 export default {
   name: 'Login',
   components: {
+    AppLoading: Loading
   },
   data () {
     return {

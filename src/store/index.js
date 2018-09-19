@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     jwt: '',
-    user: ''
+    user: '',
+    isLoading: false
   },
   getters: {
     token: state => {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     setUser (state, user) {
       state.user = user
+    },
+    setLoading (state, isLoading) {
+      state.isLoading = isLoading
     }
   },
   actions: {

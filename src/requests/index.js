@@ -16,13 +16,21 @@ var request = axios.create({
   }
 })
 
+request.interceptors.request.use(config => {
+  store.commit('setLoading', true)
+  return config
+}, error => {
+  return Promise.reject(error)
+})
+
 request.interceptors.response.use(response => {
+  store.commit('setLoading', false)
   let status = Number(response.data.code)
   switch (status) {
     case ENV.HTTP_UNAUTHORIZED:
       Message.alert('认证过期，请登录后重试！', '提示').then(result => {
         if (result) {
-          store.commit('unauthorize')
+          store.dispatch('logout')
           router.replace({name: 'AuthLogin'})
         }
       })
@@ -34,11 +42,16 @@ request.interceptors.response.use(response => {
         }
       })
       break
+    case ENV.HTTP_FAIL:
+      Message.alert(response.data.msg, '失败')
+      break
     default:
       return response
   }
   return response
 }, error => {
+  store.commit('setLoading', false)
+  Message.alert('请求失败！', '失败')
   return Promise.reject(error)
 })
 
