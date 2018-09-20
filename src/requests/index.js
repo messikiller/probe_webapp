@@ -25,33 +25,34 @@ request.interceptors.request.use(config => {
 
 request.interceptors.response.use(response => {
   store.commit('setLoading', false)
-  let status = Number(response.data.code)
-  switch (status) {
-    case ENV.HTTP_UNAUTHORIZED:
-      Message.alert('认证过期，请登录后重试！', '提示').then(result => {
-        if (result) {
-          store.dispatch('logout')
-          router.replace({name: 'AuthLogin'})
-        }
-      })
-      break
-    case ENV.HTTP_FORBIDDEN:
-      Message.alert('你无权访问！', '提示').then(result => {
-        if (result) {
-          router.go(-1)
-        }
-      })
-      break
-    case ENV.HTTP_FAIL:
-      Message.alert(response.data.msg, '失败')
-      break
-    default:
-      return response
-  }
   return response
 }, error => {
   store.commit('setLoading', false)
-  Message.alert('请求失败！', '失败')
+  if (error.response) {
+    switch (Number(error.response.status)) {
+      case ENV.HTTP_UNAUTHORIZED:
+        Message.alert('认证过期，请登录后重试！', '提示').then(result => {
+          if (result) {
+            store.dispatch('logout')
+            router.replace({name: 'AuthLogin'})
+          }
+        })
+        break
+      case ENV.HTTP_FORBIDDEN:
+        Message.alert('你无权访问！', '提示').then(result => {
+          if (result) {
+            router.go(-1)
+          }
+        })
+        break
+      case ENV.HTTP_FAIL:
+        Message.alert(error.response.data.msg, '失败')
+        break
+      default:
+        Message.alert('未知错误！', '失败')
+    }
+  }
+
   return Promise.reject(error)
 })
 

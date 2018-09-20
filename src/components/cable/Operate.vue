@@ -7,7 +7,11 @@
     <mu-card>
       <mu-card-text>
 
-        <mu-text-field label="电缆号：" v-model="cable_number" full-width ref="dataCableNumber"></mu-text-field>
+        <mu-form ref="dataForm" :model="form">
+          <mu-form-item label="电缆号：" prop="cable_number" :rules="notEmptyRules">
+            <mu-text-field v-model="form.cable_number" full-width ref="dataCableNumber"></mu-text-field>
+          </mu-form-item>
+        </mu-form>
 
         <mu-button color="primary" full-width @click="handleSubmit">提交</mu-button>
 
@@ -26,15 +30,28 @@ export default {
   },
   data () {
     return {
-      cable_number: ''
+      notEmptyRules: [
+        { validate: (val) => !!val, message: '该字段不能为空！' }
+      ],
+      form: {
+        cable_number: ''
+      }
     }
   },
   methods: {
     handleSubmit: function () {
-      this.$http.post('/form/cable/operate', {
-        cable_number: this.cable_number
-      }).then(res => {
-        // console.log(res)
+      var that = this
+      that.$refs.dataForm.validate().then((result) => {
+        if (result) {
+          that.$http.post(that.API.CableOperate, {
+            cable_number: that.form.cable_number
+          }).then(res => {
+            that.$toast.success({
+              message: '操作成功！',
+              position: 'top-end'
+            })
+          })
+        }
       })
     }
   }

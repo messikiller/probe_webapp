@@ -1,4 +1,5 @@
 export default {
-  auth_login: '/auth/login',
-  auth_me: '/auth/me'
+  AuthLogin: '/auth/login',
+  AuthMe: '/auth/me',
+  CableOperate: '/form/cable/operate'
 }

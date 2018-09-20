@@ -13,7 +13,8 @@ export default new Vuex.Store({
   getters: {
     token: state => {
       if (!state.jwt) {
-        state.jwt = window.localStorage.getItem(ENV.JWT_KEY)
+        var storageJwt = window.localStorage.getItem(ENV.JWT_KEY) || ''
+        state.jwt = storageJwt
       }
       return state.jwt
     },
