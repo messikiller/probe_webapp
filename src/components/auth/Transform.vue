@@ -27,12 +27,12 @@
             :key="idx"
             delete
             @click="handleClickChip(user)"
-            @delete="handleDeleteChip(user)"
+            @delete="handleDeleteChip(user, idx)"
           >
             <mu-avatar :size="32" color="teal">
               <mu-icon value="account_circle"></mu-icon>
             </mu-avatar>
-            {{ user.username }}（{{ user.nickname }}）
+            {{ user.dest_username }}（{{ user.dest_nickname }}）
           </mu-chip>
         </mu-container>
 
@@ -42,38 +42,48 @@
 </template>
 
 <script>
+import utils from '@/utils'
+
 export default {
   name: 'Tansform',
   data () {
     return {
-      users: [
-        {username: 'Tom', nickname: '汤姆'},
-        {username: 'Jerry', nickname: '杰瑞'},
-        {username: 'Sam', nickname: '山姆'},
-        {username: 'Foo', nickname: '丹妮'},
-        {username: 'Bar', nickname: '维恩'}
-      ],
+      users: [],
       username: '',
       password: '',
       showPassword: false
     }
   },
+  mounted () {
+    this.$http.get(this.API.AuthTransformList).then(res => {
+      this.users = res.data.data
+    })
+  },
   methods: {
     handleClickChip: function (user) {
-      this.$confirm('确定要快速切换到：' + user.username + '？', '提示', {
+      this.$confirm('确定要快速切换到：' + user.dest_username + '？', '提示', {
         type: 'warning'
       }).then(({ result }) => {
         if (result) {
-          this.$toast.message('点击了确定')
+          this.$http.post(this.API.AuthTransformQuick, {
+            user_id: user.dest_id
+          }).then(res => {
+            utils.auth.login(res.data.data.access_token, res.data.data.user)
+            this.$message.alert('切换成功！', '成功').then(() => {
+              this.$router.go(0)
+            })
+          })
         }
       })
     },
     handleDeleteChip: function (user) {
-      this.$confirm('确定要删除这一快速切换：' + user.username + '？', '提示', {
+      this.$confirm('确定要删除这一快速切换：' + user.dest_username + '？', '提示', {
         type: 'warning'
       }).then(({ result }) => {
         if (result) {
-          this.$toast.message('点击了确定')
+          this.$message.$alert('删除成功！').then(() => {
+            this.$router.go(0)
+          })
         }
       })
     }

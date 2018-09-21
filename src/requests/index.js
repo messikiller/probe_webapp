@@ -10,15 +10,13 @@ var request = axios.create({
   timeout: ENV.REQUEST_TIMEOUT,
   withCredential: true,
   headers: {
-    'x-Requested-with': 'XMLHttpRequest',
-    'common': {
-      'Authorization': 'Bearer ' + utils.auth.getToken()
-    }
+    'x-Requested-with': 'XMLHttpRequest'
   }
 })
 
 request.interceptors.request.use(config => {
   store.commit('setLoading', true)
+  config.headers.common['Authorization'] = 'Bearer ' + utils.auth.getToken()
   return config
 }, error => {
   return Promise.reject(error)
