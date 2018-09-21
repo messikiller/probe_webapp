@@ -32,6 +32,7 @@
 
 <script>
 import Loading from '@/components/layouts/Loading'
+import utils from '@/utils'
 
 export default {
   name: 'Login',
@@ -59,11 +60,8 @@ export default {
             username: that.form.username,
             password: that.form.password
           }).then(res => {
-            that.$store.dispatch('login', {
-              token: res.data.data.access_token,
-              userinfo: res.data.data.user
-            })
-            that.$router.push({name: 'MainIndex'})
+            utils.auth.login(res.data.data.access_token, res.data.data.user)
+            this.$router.replace({name: 'MainIndex'})
           })
         }
       })

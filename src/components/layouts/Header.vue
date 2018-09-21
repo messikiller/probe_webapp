@@ -15,6 +15,7 @@
 
 <script scoped>
 import Sider from './Sider'
+import utils from '@/utils'
 
 export default {
   name: 'Header',
@@ -23,8 +24,8 @@ export default {
   },
   computed: {
     nickname: function () {
-      var user = this.$store.getters.userinfo
-      return user === '' ? '未登录' : user.nickname
+      var user = utils.auth.getUserInfo()
+      return user.nickname || '未登录'
     }
   },
   data () {

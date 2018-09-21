@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import utils from '@/utils'
+
 export default {
   name: 'Sider',
   props: ['show'],
@@ -53,7 +55,7 @@ export default {
         type: 'warning'
       }).then(({ result }) => {
         if (result) {
-          this.$store.dispatch('logout')
+          utils.auth.logout()
           this.$router.push({name: 'AuthLogin'})
         }
       })

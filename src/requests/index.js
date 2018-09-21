@@ -3,18 +3,16 @@ import axios from 'axios'
 import router from '@/router'
 import Message from 'muse-ui-message'
 import ENV from '@/../env.js'
+import utils from '@/utils'
 
 var request = axios.create({
   baseURL: ENV.API_SERVER,
   timeout: ENV.REQUEST_TIMEOUT,
   withCredential: true,
-  validateStatus: function (status) {
-    return status >= 200 && status <= 500
-  },
   headers: {
     'x-Requested-with': 'XMLHttpRequest',
     'common': {
-      'Authorization': 'Bearer ' + store.getters.token
+      'Authorization': 'Bearer ' + utils.auth.getToken()
     }
   }
 })
@@ -32,7 +30,7 @@ request.interceptors.response.use(response => {
     case ENV.HTTP_UNAUTHORIZED:
       Message.alert('认证过期，请登录后重试！', '提示').then(result => {
         if (result) {
-          store.dispatch('logout')
+          utils.auth.logout()
           router.replace({name: 'AuthLogin'})
         }
       })
