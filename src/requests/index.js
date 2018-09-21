@@ -8,6 +8,9 @@ var request = axios.create({
   baseURL: ENV.API_SERVER,
   timeout: ENV.REQUEST_TIMEOUT,
   withCredential: true,
+  validateStatus: function (status) {
+    return status >= 200 && status <= 500
+  },
   headers: {
     'x-Requested-with': 'XMLHttpRequest',
     'common': {
@@ -25,35 +28,34 @@ request.interceptors.request.use(config => {
 
 request.interceptors.response.use(response => {
   store.commit('setLoading', false)
-  return response
-}, error => {
-  store.commit('setLoading', false)
-  if (error.response) {
-    switch (Number(error.response.status)) {
-      case ENV.HTTP_UNAUTHORIZED:
-        Message.alert('认证过期，请登录后重试！', '提示').then(result => {
-          if (result) {
-            store.dispatch('logout')
-            router.replace({name: 'AuthLogin'})
-          }
-        })
-        break
-      case ENV.HTTP_FORBIDDEN:
-        Message.alert('你无权访问！', '提示').then(result => {
-          if (result) {
-            router.go(-1)
-          }
-        })
-        break
-      case ENV.HTTP_FAIL:
-        Message.alert(error.response.data.msg, '失败')
-        break
-      default:
-        Message.alert('未知错误！', '失败')
-    }
+  switch (Number(response.data.code)) {
+    case ENV.HTTP_UNAUTHORIZED:
+      Message.alert('认证过期，请登录后重试！', '提示').then(result => {
+        if (result) {
+          store.dispatch('logout')
+          router.replace({name: 'AuthLogin'})
+        }
+      })
+      // break promise chain
+      return new Promise(() => {})
+    case ENV.HTTP_FORBIDDEN:
+      Message.alert('你无权访问！', '提示').then(result => {
+        if (result) {
+          router.go(-1)
+        }
+      })
+      return new Promise(() => {})
+    case ENV.HTTP_FAIL:
+      Message.alert(response.data.msg, '失败')
+      return new Promise(() => {})
+    default:
   }
 
-  return Promise.reject(error)
+  return response
+}, err => {
+  store.commit('setLoading', false)
+  Message.alert('请求出错，请联系管理员处理！', '失败')
+  return Promise.reject(err)
 })
 
 export default request

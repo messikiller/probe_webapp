@@ -47,7 +47,7 @@ export default {
             cable_number: that.form.cable_number
           }).then(res => {
             that.$toast.success({
-              message: '操作成功！',
+              message: res.data.msg,
               position: 'top-end'
             })
           })

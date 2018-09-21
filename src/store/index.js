@@ -12,11 +12,11 @@ export default new Vuex.Store({
   },
   getters: {
     token: state => {
+      var storageJwt = window.localStorage.getItem(ENV.JWT_KEY) || ''
       if (!state.jwt) {
-        var storageJwt = window.localStorage.getItem(ENV.JWT_KEY) || ''
         state.jwt = storageJwt
       }
-      return state.jwt
+      return storageJwt
     },
     userinfo: state => {
       if (!state.user) {
