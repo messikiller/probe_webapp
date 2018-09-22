@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "material-icons": "^0.2.3",
+    "mockjs": "^1.0.1-beta3",
     "muse-ui": "^3.0.1",
     "muse-ui-loading": "^0.2.0",
     "muse-ui-message": "^0.2.0",
@@ -41,7 +42,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "chalk": "^2.0.1",
-    "chromedriver": "^2.41.0",
+    "chromedriver": "^2.42.0",
     "copy-webpack-plugin": "^4.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",

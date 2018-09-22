@@ -56,7 +56,7 @@ export default {
       let that = this
       that.$refs.dataForm.validate().then((result) => {
         if (result) {
-          that.$http.post(that.API.AuthLogin, {
+          that.$http.post(that.$api.AuthLogin, {
             username: that.form.username,
             password: that.form.password
           }).then(res => {

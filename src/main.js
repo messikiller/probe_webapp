@@ -2,11 +2,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
-import request from './requests'
-import App from './App'
+import request from '@/requests'
+import App from '@/App'
 
-import store from './store'
-import router from './router'
+import store from '@/store'
+import router from '@/router'
 
 import MuseUI from 'muse-ui'
 
@@ -28,8 +28,8 @@ import env from '@/../env.js'
 import api from '@/requests/api.js'
 
 Vue.prototype.$http = request
-Vue.prototype.ENV = env
-Vue.prototype.API = api
+Vue.prototype.$env = env
+Vue.prototype.$api = api
 
 Vue.config.productionTip = false
 
@@ -39,6 +39,10 @@ Vue.use(Toast)
 Vue.use(Message)
 Vue.use(Loading)
 Vue.use(NProgress)
+
+if (process.env.NODE_ENV !== 'production') {
+  require('@/mock')
+}
 
 /* eslint-disable no-new */
 new Vue({

@@ -43,7 +43,7 @@ export default {
       var that = this
       that.$refs.dataForm.validate().then((result) => {
         if (result) {
-          that.$http.post(that.API.CableOperate, {
+          that.$http.post(that.$api.CableOperate, {
             cable_number: that.form.cable_number
           }).then(res => {
             that.$toast.success({
