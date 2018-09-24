@@ -115,13 +115,18 @@ export default {
         }
       })
     },
-    handleDeleteChip: function (user) {
+    handleDeleteChip: function (user, index) {
       this.$confirm('确定要删除这一快速切换：' + user.dest_username + '？', '提示', {
         type: 'warning'
       }).then(({ result }) => {
         if (result) {
-          this.$message.$alert('删除成功！').then(() => {
-            this.$router.go(0)
+          this.$http.get(this.$api.AuthTransformDelete, {
+            params: {
+              id: user.id
+            }
+          }).then(res => {
+            this.transforms.splice(index, 1)
+            this.$alert('删除成功！')
           })
         }
       })

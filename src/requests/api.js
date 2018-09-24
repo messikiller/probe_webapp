@@ -5,6 +5,7 @@ export default {
   AuthTransform: '/transform/execute',
   AuthTransformList: '/transform/list',
   AuthTransformQuick: '/transform/quick',
-  AuthTransformExecute: '/transform/quick',
+  AuthTransformExecute: '/transform/execute',
+  AuthTransformDelete: '/transform/delete',
   CableOperate: '/form/cable/operate'
 }

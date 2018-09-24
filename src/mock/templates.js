@@ -55,6 +55,10 @@ export default {
       }
     })
   },
+  AuthTransformDelete: (options) => {
+    let msg = '操作成功， 当前步骤：' + Random.integer(1, 10) + '，全部步骤：' + Random.integer(10, 20) + '！'
+    return success({}, msg)
+  },
   UserList: (options) => {
     return success([
       {id: 1, username: Random.last(), nickname: Random.cname()},
