@@ -126,7 +126,9 @@ export default {
             }
           }).then(res => {
             this.transforms.splice(index, 1)
-            this.$alert('删除成功！')
+            this.$alert('删除成功！', '成功', {
+              type: 'success'
+            })
           })
         }
       })
